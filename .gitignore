@@ -4,4 +4,6 @@ output/
 .tools/
 .idea/
 *.iml
+__pycache__/
+*.pyc
 Assignment4_Facade.zip
