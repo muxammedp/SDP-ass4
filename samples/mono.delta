@@ -1,0 +1,5 @@
+SAMPLEMEDIA/1
+format=delta
+sampleRate=22050
+channels=1
+data=1000,500,-2000,500

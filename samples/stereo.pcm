@@ -1,0 +1,5 @@
+SAMPLEMEDIA/1
+format=pcm
+sampleRate=44100
+channels=2
+data=1000,3000,2000,4000,-1000,1000,32767,32767,-32768,-32768
