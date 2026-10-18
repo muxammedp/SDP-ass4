@@ -1,0 +1,51 @@
+@startuml
+skinparam classAttributeIconSize 0
+top to bottom direction
+class Main <<Client>> {
+  + main(args: String[]): void
+}
+class MediaConversionFacade <<Facade>> {
+  - reader: MetadataReader
+  - codecs: CodecFactory
+  - mixer: AudioMixer
+  - writer: MediaWriter
+  + convert(source: Path, targetFormat: String, destination: Path): Path
+}
+class MetadataReader {
+  + read(source: Path): EncodedMedia
+}
+class CodecFactory {
+  + create(format: String): Codec
+}
+class AudioMixer {
+  + toMono(audio: AudioData): AudioData
+}
+class MediaWriter {
+  + write(media: EncodedMedia, destination: Path): Path
+}
+interface Codec {
+  + decode(values: int[]): int[]
+  + encode(samples: int[]): int[]
+}
+class PcmCodec
+class DeltaCodec
+class AudioData <<record>>
+class EncodedMedia <<record>>
+class ConversionException
+Main ..> MediaConversionFacade : uses
+Main ..> ConversionException : catches
+MediaConversionFacade *--> MetadataReader
+MediaConversionFacade *--> CodecFactory
+MediaConversionFacade *--> AudioMixer
+MediaConversionFacade *--> MediaWriter
+MediaConversionFacade ..> Codec : encode and decode
+MediaConversionFacade ..> ConversionException : throws
+CodecFactory ..> Codec : returns
+CodecFactory ..> PcmCodec : creates
+CodecFactory ..> DeltaCodec : creates
+PcmCodec ..|> Codec
+DeltaCodec ..|> Codec
+MetadataReader ..> EncodedMedia
+MediaWriter ..> EncodedMedia
+AudioMixer ..> AudioData
+@enduml
