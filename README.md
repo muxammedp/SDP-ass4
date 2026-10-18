@@ -30,10 +30,10 @@ $jdk = (Get-ChildItem .tools/jdk* -Directory | Select-Object -First 1).FullName
 ## Verify
 
 ```powershell
-.\build.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File .\build.ps1
 ```
 
-If Java is not on PATH, use `.\build.ps1 -JavaHome 'C:\path\to\jdk-17'` or set `JAVA_HOME`. The script also detects the optional JDK in `.tools`. It compiles with Java 17 compatibility, treats compiler warnings as errors, and runs 25 checks. A failed assertion returns a nonzero exit code. Checks use temporary files and remove them after execution.
+If Java is not on PATH, append `-JavaHome 'C:\path\to\jdk-17'` to the command or set `JAVA_HOME`. The script also detects the optional JDK in `.tools`. This invocation permits this script for that process without changing the system execution policy. It compiles with Java 17 compatibility, treats compiler warnings as errors, and runs 25 checks. A failed assertion returns a nonzero exit code. Checks use temporary files and remove them after execution.
 
 Manual equivalent:
 
@@ -79,6 +79,7 @@ The pipeline processes real integer samples. It does not merely change the exten
 | `tests/FacadeTests.java` | End-to-end verification through the facade |
 | `docs/facade.puml` and `docs/facade.png` | Editable UML source and rendered diagram |
 | `report.pdf` | Assignment report with five Clean Code examples |
+| `docs/create_report.py` | Editable report generator using Python and ReportLab |
 | `docs/DEFENSE.md` | Design walkthrough and defense questions |
 | `verification.txt` | Saved validation evidence |
 
@@ -87,5 +88,7 @@ Subsystem classes are public and have no reference to the facade. Advanced calle
 ## Submission
 
 The project includes local incremental Git commits. Publish the repository to your own GitHub account, then add its actual URL to the report before uploading the report and link to Moodle. No remote repository is assumed or fabricated here.
+
+To regenerate the report after publication, install Python's `reportlab` package and run `python docs/create_report.py --repository YOUR_ACTUAL_GITHUB_URL`. The default generator keeps the publication status explicit when no URL is supplied. Check the regenerated PDF before submission.
 
 The supplied assignment limits AI use to examples and clarification. Review the implementation, adapt it independently, and ensure that your submission follows your course policy.
